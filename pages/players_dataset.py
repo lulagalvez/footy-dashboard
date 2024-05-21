@@ -3,10 +3,11 @@ import dash
 from dash import html, dash_table, dcc
 import plotly.graph_objects as go
 
-dash.register_page(__name__, path='/dataset', name="Dataset 📋")
+dash.register_page(__name__, path='/players-dataset', name="Jugadores")
 
 ####################### LOAD DATASET #############################
-titanic_df = pd.read_csv("./data/england-premier-league-players-2018-to-2019-stats.csv")
+# Load only the first 48 columns
+titanic_df = pd.read_csv("./data/england-premier-league-players-2018-to-2019-stats.csv", usecols=range(9))
 
 ####################### PAGE LAYOUT #############################
 layout = html.Div(children=[
