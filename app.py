@@ -1,28 +1,32 @@
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, Input, Output, callback_context, ALL
 import dash_bootstrap_components as dbc
 import plotly.express as px
-import plotly.graph_objects as go
-import numpy as np
-import random
 import pandas as pd
 from graphs.teamprogress_linegraph import prepare_data_and_fig
 
-
 px.defaults.template = "ggplot2"
-
-external_css = [
-    "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css", ]
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
+# Prepare initial figure
 fig = prepare_data_and_fig()
 
 teams = [
-    "Arsenal", "Aston Villa", "Brentford", "Brighton", "Burnley",
-    "Chelsea", "Crystal Palace", "Everton", "Fulham", "Leeds United",
-    "Leicester City", "Liverpool", "Manchester City", "Manchester United",
-    "Newcastle United", "Norwich City", "Southampton", "Tottenham Hotspur",
-    "Watford", "West Ham United", "Wolverhampton Wanderers"
+    "Arsenal", "Bournemouth", "Brighton", "Burnley",
+    "Cardiff", "Chelsea", "Crystal Palace", "Everton",
+    "Fulham", "Huddersfield", "Leicester", "Liverpool",
+    "Manchester City", "Manchester United", "Newcastle",
+    "Southampton", "Tottenham", "Watford", "West Ham",
+    "Wolverhampton"
+]
+
+team_buttons = [
+    dbc.Button(
+        html.Img(src=f'assets/teams/{team.lower().replace(" ", "")}.png', style={'height': '80%', 'width': 'auto'}),
+        id={'type': 'team-button', 'index': team}, className="btn btn-info", 
+        style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0
+    )
+    for team in teams
 ]
 
 app.layout = dbc.Container([
@@ -35,244 +39,45 @@ app.layout = dbc.Container([
                         html.Br(),
                         html.Span("FootyDashboard!")
                     ]),
-                    html.P(
-                        "La mejor plataforma para realizar tu análisis futbolero.")
+                    html.P("La mejor plataforma para realizar tu análisis futbolero.")
                 ],
-                style={
-                    "vertical-alignment": "top",
-                    "height": 160
-                }),
+                style={"vertical-alignment": "top", "height": 160}
+            ),
             html.Div(
-                [
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/arsenal.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/bournemouth.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/brighton.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/burnley.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70})
-                ],
-                style={
-                    'margin-left': 15,
-                    'margin-right': 15,
-                    'display': 'flex'
-                }),
-            html.Div(
-                [
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/cardiff.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/chelsea.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/crystalpalace.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/everton.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70})
-                ],
-                style={
-                    'margin-left': 15,
-                    'margin-right': 15,
-                    'display': 'flex'
-                }),
-            html.Div(
-                [
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/fulham.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/huddersfield.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/leicester.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/liverpool.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70})
-                ],
-                style={
-                    'margin-left': 15,
-                    'margin-right': 15,
-                    'display': 'flex'
-                }),
-            html.Div(
-                [
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/manchestercity.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/manchesterunited.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/newcastle.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/southampton.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70})
-                ],
-                style={
-                    'margin-left': 15,
-                    'margin-right': 15,
-                    'display': 'flex'
-                }),
-            html.Div(
-                [
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/tottenham.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/watford.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/westham.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70}),
-                    html.Div(
-                        dbc.Button(
-                            html.Img(
-                                src='assets/teams/wolverhampton.png',
-                                style={'height': '80%', 'width': 'auto'}),
-                            className="btn btn-info",
-                            style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0),
-                        style={'width': 70})
-                ],
-                style={
-                    'margin-left': 15,
-                    'margin-right': 15,
-                    'display': 'flex'
-                }),
-
+                team_buttons,
+                style={'margin-left': 15, 'margin-right': 15, 'display': 'flex', 'flex-wrap': 'wrap'}
+            ),
         ],
-        style={
-            'width': 400,
-            'margin-left': 35,
-            'margin-top': 35,
-            'margin-bottom': 35
-        }),
+        style={'width': 400, 'margin-left': 35, 'margin-top': 35, 'margin-bottom': 35}
+    ),
     html.Div(
         [
-            html.Div(dcc.Graph(figure=fig), style={'width': 790}),
+            html.Div(dcc.Graph(id='main-graph', figure=fig), style={'width': 790}),
             html.Div([
                 html.H2('Output 1:'),
-                html.Div(className='Output'),
+                html.Div(id='output-1', className='Output'),
                 html.H2('Output 2:'),
-                html.Div(html.H3("Selected Value"), className='Output')
-            ],
-                style={'width': 200})
+                html.Div(id='output-2', className='Output')
+            ], style={'width': 200})
         ],
-        style={
-            'width': 990,
-            'margin-top': 35,
-            'margin-right': 35,
-            'margin-bottom': 35,
-            'display': 'flex'
-        })
-],
-    fluid=True,
-    style={'display': 'flex'},
-    className='dashboard-container')
+        style={'width': 990, 'margin-top': 35, 'margin-right': 35, 'margin-bottom': 35, 'display': 'flex'}
+    )
+], fluid=True, style={'display': 'flex'}, className='dashboard-container')
+
+@app.callback(
+    Output('output-1', 'children'),
+    Output('output-2', 'children'),
+    Output('main-graph', 'figure'),
+    Input({'type': 'team-button', 'index': ALL}, 'n_clicks')
+)
+def update_dashboard(n_clicks):
+    ctx = callback_context
+    if not ctx.triggered:
+        return "Output 1: No team selected", "Output 2: No team selected", fig
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        team = eval(button_id)['index']
+        return f"Output 1: {team}", f"Output 2: Selected Value: {team}", prepare_data_and_fig(team)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)
