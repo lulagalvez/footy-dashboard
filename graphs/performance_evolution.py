@@ -49,26 +49,27 @@ def prepare_data_and_fig_evolution(team_name):
     # Add line chart for points per game
     fig.add_trace(
         go.Scatter(x=team_matches['date_GMT'], y=team_matches['points_per_game'],
-                   mode='lines+markers', name='Points per Game'),
+                   mode='lines+markers', name='Puntos por partido'),
         row=1, col=1
     )
 
     # Add line chart for goals scored
     fig.add_trace(
         go.Scatter(x=team_matches['date_GMT'], y=team_matches['goals_scored'],
-                   mode='lines+markers', name='Goals Scored'),
+                   mode='lines+markers', name='Goles anotados'),
         row=2, col=1
     )
 
     # Add line chart for goals conceded
     fig.add_trace(
         go.Scatter(x=team_matches['date_GMT'], y=team_matches['goals_conceded'],
-                   mode='lines+markers', name='Goals Conceded'),
+                   mode='lines+markers', name='Goles perdidos'),
         row=2, col=1
     )
 
     # Update layout to improve viewing
     fig.update_layout(plot_bgcolor='#010103',
+                      paper_bgcolor='#010103',
                       height=300,
                       autosize=True,
                       xaxis_visible=False,
@@ -77,10 +78,13 @@ def prepare_data_and_fig_evolution(team_name):
                       margin=dict(l=20, r=20, t=20, b=20),
                       legend=dict(
                           orientation="h",
-                          x=0.5,  # Center the legend horizontally
-                          y=-0.1,  # Position legend below the x-axis
-                          xanchor='center',  # Anchor the legend's horizontal center at x
-                          yanchor='top'  # Anchor the legend's top at y
+                          x=0.5,
+                          y=-0.1,
+                          xanchor='center',
+                          yanchor='top',
+                          font=dict(
+                              color='white'
+                          )
                       ))
 
     fig.update_xaxes(title_text="", showticklabels=False, row=2, col=1)
