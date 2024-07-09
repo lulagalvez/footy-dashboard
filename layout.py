@@ -44,24 +44,21 @@ def create_layout(teams):
                            'margin-right': 35, 'margin-top': 35, 'margin-bottom': 35}
                 ),
                 # Gráficos
-                html.Div([
-                    html.Div(dcc.Graph(id='graph-1'), className='graph-square',
-                             style={'height': '50%', 'width': '100%'}),
-                ]),
-                html.Div([
-                    html.Div(dcc.Graph(id='graph-2'), className='graph-square',
-                             style={'height': '50%', 'width': '100%'}),
-                ]),
-                html.Div([
-                    html.Div(dcc.Graph(id='graph-3'), className='graph-square',
-                             style={'height': '50%', 'width': '100%'}),
-                ]),
-                html.Div([
-                    html.Div(dcc.Graph(id='graph-4'), className='graph-square',
-                             style={'height': '50%', 'width': '100%'}),
-                ])
+                html.Div(
+                    [
+                        html.Div([dcc.Graph(id='graph-1')], className='graph-square',
+                                 style={'width': '50%', 'display': 'inline-block'}),
+                        html.Div([dcc.Graph(id='graph-2')], className='graph-square',
+                                 style={'width': '50%', 'display': 'inline-block'}),
+                        html.Div([dcc.Graph(id='graph-3')], className='graph-square',
+                                 style={'width': '50%', 'display': 'inline-block'}),
+                        html.Div([dcc.Graph(id='graph-4')], className='graph-square',
+                                 style={'width': '50%', 'display': 'inline-block'}),
+                    ],
+                    style={'width': '100%'}
+                )
             ],
-            style={'overflowY': 'scroll', 'padding': '20px', 'flex': '0 0 56%'}
+            style={'flex': '0 0 56%'}
         ),
         html.Div(
             [

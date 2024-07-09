@@ -1,6 +1,7 @@
 from dash import Input, Output, ALL
 import dash
 from graphs.teamprogress_linegraph import prepare_data_and_fig
+from graphs.performance_evolution import prepare_data_and_fig_evolution
 
 
 def register_callbacks(app):
@@ -21,10 +22,10 @@ def register_callbacks(app):
         if not ctx.triggered:
             default_team = 'Arsenal'  # or any default team
             return (
-                prepare_data_and_fig(
-                    default_team), prepare_data_and_fig(default_team),
-                prepare_data_and_fig(
-                    default_team), prepare_data_and_fig(default_team),
+                prepare_data_and_fig_evolution(default_team),
+                prepare_data_and_fig(default_team),
+                prepare_data_and_fig(default_team),
+                prepare_data_and_fig(default_team),
                 "Player 1", "Player 2", "Player 3", "Player 4",
                 default_team  # Display default team name
             )
@@ -32,8 +33,10 @@ def register_callbacks(app):
             button_id = ctx.triggered[0]['prop_id'].split('.')[0]
             team = eval(button_id)['index']
             return (
-                prepare_data_and_fig(team), prepare_data_and_fig(team),
-                prepare_data_and_fig(team), prepare_data_and_fig(team),
+                prepare_data_and_fig_evolution(team),
+                prepare_data_and_fig(team),
+                prepare_data_and_fig(team),
+                prepare_data_and_fig(team),
                 f"Player 1 of {team}", f"Player 2 of {team}", f"Player 3 of {team}", f"Player 4 of {team}",
                 team  # Update the display with the selected team name
             )

@@ -12,12 +12,12 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 # Equipos de la Premier League
 teams = [
-    "Arsenal", "Bournemouth", "Brighton", "Burnley",
-    "Cardiff", "Chelsea", "Crystal Palace", "Everton",
-    "Fulham", "Huddersfield", "Leicester", "Liverpool",
-    "Manchester City", "Manchester United", "Newcastle",
-    "Southampton", "Tottenham", "Watford", "West Ham",
-    "Wolverhampton"
+    "Arsenal", "AFC Bournemouth", "Brighton & Hove Albion", "Burnley",
+    "Cardiff City", "Chelsea", "Crystal Palace", "Everton",
+    "Fulham", "Huddersfield Town", "Leicester City", "Liverpool",
+    "Manchester City", "Manchester United", "Newcastle United",
+    "Southampton", "Tottenham Hotspur", "Watford", "West Ham United",
+    "Wolverhampton Wanderers"
 ]
 
 # Registrar los callbacks

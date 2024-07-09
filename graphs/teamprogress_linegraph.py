@@ -107,8 +107,8 @@ def prepare_data_and_fig(team):
         line=dict(color=team_colors.get(trace.name))))
 
     fig.update_layout(plot_bgcolor='#010103',
-                      width=790,
-                      height=730,
+                      height=250,
+                      autosize=True,
                       xaxis_visible=False,
                       yaxis_visible=False,
                       showlegend=False,
