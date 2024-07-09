@@ -21,6 +21,7 @@ teams = [
     "Wolverhampton Wanderers"
 ]
 
+# Cargamos los datos de los jugadores desde un archivo CSV
 player_df = pd.read_csv(
     './data/england-premier-league-players-2018-to-2019-stats.csv')
 
@@ -41,9 +42,9 @@ app.layout = html.Div([
         'background-repeat': 'no-repeat',
         'background-position': 'center',
         'opacity': 0.5,
-        'z-index': -1  # Asegura que esté detrás de todo el contenido
+        'z-index': -1  
     }),
-    # Contenido principal
+    # Contenedor para los elementos interactivos y gráficos
     html.Div([
         create_layout(teams),
         html.Div(id='hidden-div', style={'display': 'none'})

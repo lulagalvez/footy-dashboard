@@ -3,13 +3,16 @@ import dash_bootstrap_components as dbc
 
 
 def create_layout(teams):
+    # Generamos botones para cada equipo utilizando imágenes de los equipos
+    # Cada botón se identifica por un ID único que refleja el equipo correspondiente
     team_buttons = [
         dbc.Button(html.Img(src=f'assets/teams/{team.lower().replace(" ", "")}.png', style={'height': '100%', 'width': 'auto'}),
                    id={'type': 'team-button', 'index': team}, className="btn btn-info", style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0)
         for team in teams
     ]
-
+     # Estructuración del contenedor principal que incluye tres secciones principales
     return dbc.Container([
+        # Sección superior: Bienvenida y selección de equipos
         html.Div(
             [
                 html.Div(
@@ -33,6 +36,7 @@ def create_layout(teams):
             style={'width': '20%', 'margin-left': 35,
                    'margin-right': 35, 'margin-top': 35, 'margin-bottom': 35}
         ),
+        # Sección superior: Bienvenida y selección de equipos
         html.Div(
             [
                 html.Div(
@@ -43,7 +47,7 @@ def create_layout(teams):
                     style={'width': '100%', 'margin-left': 35,
                            'margin-right': 35, 'margin-top': 35, 'margin-bottom': 35, 'text-align': 'center'}
                 ),
-                # Gráficos
+                # Gráficos de datos de equipos y jugadores
                 html.Div(
                     [
                         html.Div([dcc.Graph(id='graph-1')], className='graph-square',
@@ -60,9 +64,10 @@ def create_layout(teams):
             ],
             style={'overflowY': 'scroll', 'flex': '0 0 56%'}
         ),
+        # Sección derecha: Listado de jugadores
         html.Div(
             [
-                # Lista de jugadores en la sección de la derecha con barra de desplazamiento
+                
                 html.Div(id='players-list', style={
                     'overflowY': 'scroll',
                     'height': '100%',
