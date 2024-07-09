@@ -3,6 +3,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 from layout import create_layout
 from callbacks import register_callbacks
+import pandas as pd
 
 # Configuración de Plotly
 px.defaults.template = "ggplot2"
@@ -20,8 +21,11 @@ teams = [
     "Wolverhampton Wanderers"
 ]
 
+player_df = pd.read_csv(
+    './data/england-premier-league-players-2018-to-2019-stats.csv')
+
 # Registrar los callbacks
-register_callbacks(app)
+register_callbacks(app, player_df)
 
 # Asignar el layout
 app.layout = html.Div([

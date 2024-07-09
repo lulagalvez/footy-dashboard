@@ -53,7 +53,7 @@ def create_layout(teams):
                         html.Div([dcc.Graph(id='graph-3')], className='graph-square',
                                  style={'width': '100%', 'display': 'inline-block'}),
                         html.Div([dcc.Graph(id='graph-4')], className='graph-square',
-                                 style={'width': '50%', 'display': 'inline-block'}),
+                                 style={'width': '100%', 'display': 'inline-block'}),
                     ],
                     style={'width': '100%'}
                 )
@@ -63,15 +63,15 @@ def create_layout(teams):
         html.Div(
             [
                 # Lista de jugadores en la sección de la derecha con barra de desplazamiento
-                html.Div([
-                    html.Div(id='player-1', className='player-info'),
-                    html.Div(id='player-2', className='player-info'),
-                    html.Div(id='player-3', className='player-info'),
-                    html.Div(id='player-4', className='player-info')
-                ],
-                    style={'width': '100%', 'height': '100%'})
+                html.Div(id='players-list', style={
+                    'overflowY': 'scroll',
+                    'height': '100%',
+                    'padding': '15px',
+                    'background-color': '#333',
+                    'color': '#fff'
+                })
             ],
-            style={'overflowY': 'scroll', 'overflowX': 'hidden', 'padding': '15px',
+            style={'overflowY': 'scroll', 'padding': '15px',
                    'flex': '0 0 20%', 'background-color': '#333', 'color': '#fff'}
         )
     ], fluid=True, style={'display': 'flex', 'flex-direction': 'row', }, className='dashboard-container')
