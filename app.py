@@ -20,6 +20,9 @@ teams = [
     "Wolverhampton"
 ]
 
+# Registrar los callbacks
+register_callbacks(app)
+
 # Asignar el layout
 app.layout = html.Div([
     # Imagen de fondo
@@ -43,8 +46,6 @@ app.layout = html.Div([
     ], style={'position': 'relative', 'z-index': 1})
 ], style={'position': 'relative'})
 
-# Registrar los callbacks
-register_callbacks(app)
 
 # Añadir estilos CSS adicionales para asegurar la distribución adecuada
 app.clientside_callback(

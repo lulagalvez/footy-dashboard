@@ -4,7 +4,7 @@ from dash import html, dcc
 import plotly.express as px
 
 
-def prepare_data_and_fig():
+def prepare_data_and_fig(team):
 
     matches_df = pd.read_csv(
         "./data/england-premier-league-matches-2018-to-2019-stats.csv")
