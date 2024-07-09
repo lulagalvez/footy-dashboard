@@ -1,16 +1,16 @@
-from dash import Dash, html, dcc, Input, Output, callback_context, ALL
+from dash import Dash, html, Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
-import pandas as pd
-from graphs.teamprogress_linegraph import prepare_data_and_fig
+from layout import create_layout
+from callbacks import register_callbacks
 
+# Configuración de Plotly
 px.defaults.template = "ggplot2"
 
+# Crear la aplicación Dash
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
-# Prepare initial figure
-fig = prepare_data_and_fig()
-
+# Equipos de la Premier League
 teams = [
     "Arsenal", "Bournemouth", "Brighton", "Burnley",
     "Cardiff", "Chelsea", "Crystal Palace", "Everton",
@@ -20,64 +20,64 @@ teams = [
     "Wolverhampton"
 ]
 
-team_buttons = [
-    dbc.Button(
-        html.Img(src=f'assets/teams/{team.lower().replace(" ", "")}.png', style={'height': '80%', 'width': 'auto'}),
-        id={'type': 'team-button', 'index': team}, className="btn btn-info", 
-        style={'width': '70px', 'height': '70px', 'padding': '5px'}, n_clicks=0
-    )
-    for team in teams
-]
+# Asignar el layout
+app.layout = html.Div([
+    # Imagen de fondo
+    html.Div(style={
+        'position': 'fixed',
+        'top': 0,
+        'left': 0,
+        'width': '100%',
+        'height': '100%',
+        'background-image': 'url("/assets/Santiago_Bernabeu_Stadium_-_panoramio.jpg")',
+        'background-size': 'cover',
+        'background-repeat': 'no-repeat',
+        'background-position': 'center',
+        'opacity': 0.5,
+        'z-index': -1  # Asegura que esté detrás de todo el contenido
+    }),
+    # Contenido principal
+    html.Div([
+        create_layout(teams),
+        html.Div(id='hidden-div', style={'display': 'none'})
+    ], style={'position': 'relative', 'z-index': 1})
+], style={'position': 'relative'})
 
-app.layout = dbc.Container([
-    html.Div(
-        [
-            html.Div(
-                [
-                    html.H1([
-                        html.Span("¡Bienvenido a"),
-                        html.Br(),
-                        html.Span("FootyDashboard!")
-                    ]),
-                    html.P("La mejor plataforma para realizar tu análisis futbolero.")
-                ],
-                style={"vertical-alignment": "top", "height": 160}
-            ),
-            html.Div(
-                team_buttons,
-                style={'margin-left': 15, 'margin-right': 15, 'display': 'flex', 'flex-wrap': 'wrap'}
-            ),
-        ],
-        style={'width': 400, 'margin-left': 35, 'margin-top': 35, 'margin-bottom': 35}
-    ),
-    html.Div(
-        [
-            html.Div(dcc.Graph(id='main-graph', figure=fig), style={'width': 790}),
-            html.Div([
-                html.H2('Output 1:'),
-                html.Div(id='output-1', className='Output'),
-                html.H2('Output 2:'),
-                html.Div(id='output-2', className='Output')
-            ], style={'width': 200})
-        ],
-        style={'width': 990, 'margin-top': 35, 'margin-right': 35, 'margin-bottom': 35, 'display': 'flex'}
-    )
-], fluid=True, style={'display': 'flex'}, className='dashboard-container')
+# Registrar los callbacks
+register_callbacks(app)
 
-@app.callback(
-    Output('output-1', 'children'),
-    Output('output-2', 'children'),
-    Output('main-graph', 'figure'),
-    Input({'type': 'team-button', 'index': ALL}, 'n_clicks')
+# Añadir estilos CSS adicionales para asegurar la distribución adecuada
+app.clientside_callback(
+    """
+    function(stylesheet) {
+        let style = document.createElement('style');
+        style.innerHTML = `
+            .graph-square {
+                width: 48%;
+                height: 48%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+            .player-info {
+                padding: 15px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+                background-color: #444;
+                color: #fff;
+                border-radius: 5px;
+            }
+            .player-info:hover {
+                background-color: #555;
+            }
+        `;
+        document.head.appendChild(style);
+        return stylesheet;
+    }
+    """,
+    Output('hidden-div', 'children'),
+    Input('hidden-div', 'children')
 )
-def update_dashboard(n_clicks):
-    ctx = callback_context
-    if not ctx.triggered:
-        return "Output 1: No team selected", "Output 2: No team selected", fig
-    else:
-        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        team = eval(button_id)['index']
-        return f"Output 1: {team}", f"Output 2: Selected Value: {team}", prepare_data_and_fig(team)
 
+# Ejecutar la aplicación
 if __name__ == '__main__':
     app.run_server(debug=True)
