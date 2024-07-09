@@ -36,6 +36,7 @@ def prepare_possession_goals_fig(team_name):
                       paper_bgcolor='#010103',
                       font_color="white",
                       height=300,
+                      title="Impacto de la Posesión",
                       autosize=True)
 
     return fig

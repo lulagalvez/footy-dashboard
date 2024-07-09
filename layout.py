@@ -71,7 +71,6 @@ def create_layout(teams):
                     'color': '#fff'
                 })
             ],
-            style={'overflowY': 'scroll', 'padding': '15px',
-                   'flex': '0 0 20%', 'background-color': '#333', 'color': '#fff'}
+            style={'padding': '15px','flex': '0 0 20%', 'background-color': '#333', 'color': '#fff'}
         )
     ], fluid=True, style={'display': 'flex', 'flex-direction': 'row', }, className='dashboard-container')

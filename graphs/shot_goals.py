@@ -38,7 +38,7 @@ def prepare_shots_goals_fig(team_name):
                       font_color="white",
                       xaxis_title="",
                       yaxis_title="",
-                      title="Goles anotados (Tamaño de burbuja representa la cantidad de disparos)",
+                      title="Goles Marcados (Tamaño de la burbuja representa la cantidad de disparos)",
                       height=300,
                       autosize=True)
 
