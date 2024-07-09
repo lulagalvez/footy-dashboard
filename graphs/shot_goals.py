@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 
-def prepare_possession_goals_fig(team_name):
+def prepare_shots_goals_fig(team_name):
     matches_df = pd.read_csv(
         './data/england-premier-league-matches-2018-to-2019-stats.csv')
 
@@ -17,24 +17,28 @@ def prepare_possession_goals_fig(team_name):
         axis=1
     )
 
-    team_matches['average_possession'] = team_matches.apply(
-        lambda x: x['home_team_possession'] if x['home_team_name'] == team_name else x['away_team_possession'],
+    team_matches['shots'] = team_matches.apply(
+        lambda x: x['home_team_shots'] if x['home_team_name'] == team_name else x['away_team_shots'],
         axis=1
     )
 
-    # Create the scatter plot
     fig = px.scatter(
         team_matches,
-        x='average_possession',
+        x='date_GMT',
         y='goals_scored',
-        labels={
-            'average_possession': 'Posesión del balón (%)', 'goals_scored': 'Goles anotados'},
-        trendline='ols'  # Add OLS trendline
+        size='shots',
+        color='goals_scored',
+        labels={'date_GMT': 'Fecha',
+                'goals_scored': 'Goles', 'shots': 'Disparos'},
+        size_max=28
     )
 
     fig.update_layout(plot_bgcolor='#010103',
                       paper_bgcolor='#010103',
                       font_color="white",
+                      xaxis_title="",
+                      yaxis_title="",
+                      title="Goles anotados (Tamaño de burbuja representa la cantidad de disparos)",
                       height=300,
                       autosize=True)
 

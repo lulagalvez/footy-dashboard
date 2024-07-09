@@ -41,7 +41,7 @@ def create_layout(teams):
                                 style={'color': 'white', 'margin-bottom': '15px'}),
                     ],
                     style={'width': '100%', 'margin-left': 35,
-                           'margin-right': 35, 'margin-top': 35, 'margin-bottom': 35}
+                           'margin-right': 35, 'margin-top': 35, 'margin-bottom': 35, 'text-align': 'center'}
                 ),
                 # Gráficos
                 html.Div(
@@ -51,14 +51,14 @@ def create_layout(teams):
                         html.Div([dcc.Graph(id='graph-2')], className='graph-square',
                                  style={'width': '50%', 'display': 'inline-block'}),
                         html.Div([dcc.Graph(id='graph-3')], className='graph-square',
-                                 style={'width': '50%', 'display': 'inline-block'}),
+                                 style={'width': '100%', 'display': 'inline-block'}),
                         html.Div([dcc.Graph(id='graph-4')], className='graph-square',
                                  style={'width': '50%', 'display': 'inline-block'}),
                     ],
                     style={'width': '100%'}
                 )
             ],
-            style={'flex': '0 0 56%'}
+            style={'overflowY': 'scroll', 'flex': '0 0 56%'}
         ),
         html.Div(
             [
