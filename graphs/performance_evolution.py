@@ -68,14 +68,23 @@ def prepare_data_and_fig_evolution(team_name):
     )
 
     # Update layout to improve viewing
-    fig.update_layout(plot_bgcolor='#010103',
+    fig.update_layout(title={
+                            'text': "Comparativa de Puntos y Goles",
+                            'font': {
+                                'color': 'white'
+                            },
+                            'x': 0.5, 
+                            'xanchor': 'center',
+                            'yanchor': 'top'
+                        },
+                      plot_bgcolor='#010103',
                       paper_bgcolor='#010103',
                       height=300,
                       autosize=True,
                       xaxis_visible=False,
                       yaxis_visible=False,
                       showlegend=True,
-                      margin=dict(l=20, r=20, t=20, b=20),
+                      margin=dict(l=20, r=20, t=50, b=20),
                       legend=dict(
                           orientation="h",
                           x=0.5,

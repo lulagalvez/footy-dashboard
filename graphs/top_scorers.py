@@ -16,6 +16,7 @@ def prepare_top_scorers_fig(team_name, df):
                  color_discrete_sequence=px.colors.qualitative.Plotly)
 
     fig.update_layout(
+        title="Top 8 Goleadores",
         plot_bgcolor='#010103',
         paper_bgcolor='#010103',
         font_color="white",
@@ -27,7 +28,7 @@ def prepare_top_scorers_fig(team_name, df):
         autosize=True,
         uniformtext_mode='hide',
         xaxis_visible=False,
-        yaxis_visible=False,
+        yaxis_visible=True,
         bargap=0.2
     )
 
