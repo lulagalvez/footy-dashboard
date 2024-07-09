@@ -8,9 +8,7 @@ def create_layout(teams):
         for team in teams
     ]
 
-    return html.Div([
-        
-        dbc.Container([
+    return dbc.Container([
         html.Div(
             [
                 html.Div(
@@ -83,7 +81,4 @@ def create_layout(teams):
             style={'overflowY': 'scroll','overflowX': 'hidden','padding': '15px', 'flex': '0 0 20%', 'background-color': '#333', 'color': '#fff'}
         )
     ], fluid=True, style={'display': 'flex', 'flex-direction': 'row',}, className='dashboard-container')
-    ],
-      style={  }
-                    )
     
