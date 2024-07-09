@@ -63,7 +63,7 @@ def prepare_data_and_fig_evolution(team_name):
     # Add line chart for goals conceded
     fig.add_trace(
         go.Scatter(x=team_matches['date_GMT'], y=team_matches['goals_conceded'],
-                   mode='lines+markers', name='Goles perdidos'),
+                   mode='lines+markers', name='Goles recibidos'),
         row=2, col=1
     )
 
