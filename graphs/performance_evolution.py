@@ -33,7 +33,7 @@ def prepare_data_and_fig_evolution(team_name):
                 return 1  # empate
             else:
                 return 0  # loss
-    .
+    
                 return 0  # derrota
             
      # Aplicar la función de cálculo de puntos a cada fila.
