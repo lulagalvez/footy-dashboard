@@ -2,6 +2,7 @@ from dash import Input, Output, ALL
 import dash
 from graphs.teamprogress_linegraph import prepare_data_and_fig
 from graphs.performance_evolution import prepare_data_and_fig_evolution
+from graphs.possession_goal_relation import prepare_possession_goals_fig
 
 
 def register_callbacks(app):
@@ -23,7 +24,7 @@ def register_callbacks(app):
             default_team = 'Arsenal'  # or any default team
             return (
                 prepare_data_and_fig_evolution(default_team),
-                prepare_data_and_fig(default_team),
+                prepare_possession_goals_fig(default_team),
                 prepare_data_and_fig(default_team),
                 prepare_data_and_fig(default_team),
                 "Player 1", "Player 2", "Player 3", "Player 4",
@@ -34,7 +35,7 @@ def register_callbacks(app):
             team = eval(button_id)['index']
             return (
                 prepare_data_and_fig_evolution(team),
-                prepare_data_and_fig(team),
+                prepare_possession_goals_fig(team),
                 prepare_data_and_fig(team),
                 prepare_data_and_fig(team),
                 f"Player 1 of {team}", f"Player 2 of {team}", f"Player 3 of {team}", f"Player 4 of {team}",
